@@ -30,10 +30,11 @@ export const clearWarningsCommand: Command = {
     const userMention = formatUserMention(targetUserId);
 
     if (cleared === 0) {
-      await ctx.reply(`ℹ️ ${userMention} had no active warnings to clear.`);
+      await ctx.reply(`✨ ${userMention} has no warnings to clear! Completely clean! (◕ᴗ◕✿)`);
       return;
     }
 
-    await ctx.reply(`🧹 **Cleared ${cleared} warning(s)** for ${userMention}.`);
+    await ctx.reply(`🌸 **Sparkling clean!** Cleared **${cleared}** warning(s) for ${userMention}! ✨`);
   },
 };
+

@@ -30,13 +30,14 @@ export const serverCommand: Command = {
     }
 
     const lines = [
-      `🏛️ **COMMUNITY INFORMATION**`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `**Community ID:** \`${ctx.message.communityId || "Current"}\``,
-      `**Members:** ${memberCount}`,
-      `**Roles Defined:** ${roleCount}`,
-      `**Current Channel:** <#${ctx.channelId}>`,
-      `**NEXUS Status:** Active & Monitoring`,
+      `🌸 ˚｡⋆୨୧˚ **COZY COMMUNITY INFO** ˚୨୧⋆｡˚ 🌸`,
+      `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───`,
+      `🏡 **Community ID:** \`${ctx.message.communityId || "Current"}\``,
+      `👥 **Mochis (Members):** \`${memberCount}\``,
+      `🎀 **Roles Defined:** \`${roleCount}\``,
+      `💬 **Current Channel:** <#${ctx.channelId}>`,
+      `🍡 **Mochi Status:** Cozy, active & caring! (◕ᴗ◕✿)`,
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───`,
     ];
 
     await ctx.reply(lines.join("\n"));

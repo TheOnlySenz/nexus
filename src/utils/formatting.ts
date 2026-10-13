@@ -70,3 +70,21 @@ export function extractChannelId(input: string): string | null {
 export function formatNumber(num: number): string {
   return num.toLocaleString();
 }
+
+/**
+ * Pastel Sakura aesthetic dividers
+ */
+export const CUTE_DIVIDER = "─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───";
+export const SAKURA_DIVIDER = "─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───";
+
+/**
+ * Creates a cute aesthetic progress bar (e.g. [▰▰▰▰▱▱▱▱▱▱] 40%)
+ */
+export function formatProgressBar(current: number, total: number, size: number = 10): string {
+  if (total <= 0) return `[${"▱".repeat(size)}] 0%`;
+  const ratio = Math.min(Math.max(current / total, 0), 1);
+  const filled = Math.round(ratio * size);
+  const empty = size - filled;
+  const percentage = Math.round(ratio * 100);
+  return `\`[${"▰".repeat(filled)}${"▱".repeat(empty)}]\` **${percentage}%**`;
+}

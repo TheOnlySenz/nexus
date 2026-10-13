@@ -33,10 +33,12 @@ export const balanceCommand: Command = {
     const userMention = formatUserMention(targetUserId, targetName);
 
     await ctx.reply(
-      `💰 **NEXUS WALLET**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**User:** ${userMention}\n` +
-      `**Balance:** **${bal.toLocaleString()}** ${settings.currencySymbol} (${settings.currencyName})`
+      `👛 ˚｡⋆୨୧˚ **SWEET MOCHI WALLET** ˚୨୧⋆｡˚ 🍡\n` +
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───\n` +
+      `👤 **Mochi:** ${userMention}\n` +
+      `🍡 **Pouch:** **${bal.toLocaleString()}** ${settings.currencySymbol} *(${settings.currencyName})*\n` +
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───\n` +
+      `*Save up your treats or share them with friends! (｡♥‿♥｡)*`
     );
   },
 };

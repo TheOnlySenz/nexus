@@ -4,10 +4,11 @@ import { parseDuration, formatDuration } from "../../utils/time";
 import { GiveawaysModule } from "../../modules/giveaways/giveaways";
 import { GiveawaysRepository } from "../../database/repositories/giveaways";
 import { CommandSyntaxError } from "../../core/errors";
+import { CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 
 export const giveawayCommand: Command = {
   name: "giveaway",
-  aliases: ["gstart", "giveaways"],
+  aliases: ["gstart", "giveaways", "raffle"],
   description: "Create, enter, and manage scheduled community giveaways.",
   usage: "!giveaway [create <time: 24h> <winners> <prize> | enter <id> | list | end <id>]",
   category: "automation",
@@ -52,7 +53,7 @@ export const giveawayCommand: Command = {
         ctx.authorId
       );
 
-      await ctx.reply(`🎉 Giveaway created successfully! (ID: \`${giveawayId}\`)`);
+      await ctx.reply(`🎁 **YAY! Giveaway launched with love!** 🌸 (ID: \`${giveawayId}\`)`);
       return;
     }
 
@@ -69,7 +70,7 @@ export const giveawayCommand: Command = {
         return;
       }
 
-      await ctx.reply(`🎟️ You have successfully entered giveaway \`${giveawayId}\`! Good luck!`);
+      await ctx.reply(`🎟️ **Entry received!** Best of luck, sweet friend! (✿◠‿◠) (ID: \`${giveawayId}\`)`);
       return;
     }
 
@@ -92,7 +93,7 @@ export const giveawayCommand: Command = {
     // 4. List active giveaways
     const active = await giveawaysRepo.getActive(communityId);
     if (active.length === 0) {
-      await ctx.reply("🎁 No active giveaways in this community right now.");
+      await ctx.reply("🎁 No active giveaways right now! Check back soon for sweet surprises! 🍡");
       return;
     }
 
@@ -103,7 +104,8 @@ export const giveawayCommand: Command = {
     });
 
     await ctx.reply(
-      `🎁 **ACTIVE COMMUNITY GIVEAWAYS**\n━━━━━━━━━━━━━━━━━━\n${rows.join("\n")}\n\nUse \`!giveaway enter <id>\` to enter!`
+      `🎁 **COZY COMMUNITY GIVEAWAYS** 🎁\n${CUTE_DIVIDER}\n${rows.join("\n")}\n${SAKURA_DIVIDER}\nUse \`!giveaway enter <id>\` to participate!`
     );
   },
 };
+

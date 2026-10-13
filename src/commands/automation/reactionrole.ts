@@ -1,7 +1,7 @@
 import { rootServer, CommunityRoleGuid, MessageGuid } from "@rootsdk/server-bot";
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractRoleId, formatRoleMention } from "../../utils/formatting";
+import { extractRoleId, formatRoleMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { ReactionRolesRepository } from "../../database/repositories/reaction-roles";
 import { CommandSyntaxError } from "../../core/errors";
 import { withRetry } from "../../core/rate-limiter";
@@ -62,13 +62,15 @@ export const reactionRoleCommand: Command = {
 
     const roleMention = formatRoleMention(roleId);
     await ctx.reply(
-      `🎭 **REACTION ROLE CONFIGURED**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**Message ID:** \`${messageId}\`\n` +
-      `**Reaction:** ${shortcode}\n` +
-      `**Role Granted:** ${roleMention}\n` +
-      `**Binding ID:** \`${record.id}\`\n\n` +
-      `Members reacting with ${shortcode} will receive ${roleMention}. Removing their reaction will revoke the role.`
+      `🎀 **REACTION ROLE BOUND** 🎀\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 **Message ID:** \`${messageId}\`\n` +
+      `✨ **Reaction:** ${shortcode}\n` +
+      `🎖️ **Role Granted:** ${roleMention}\n` +
+      `🏷️ **Binding ID:** \`${record.id}\`\n` +
+      `${SAKURA_DIVIDER}\n` +
+      `Friends reacting with ${shortcode} will receive ${roleMention}! Removing their reaction revokes the role. (◕ᴗ◕✿)`
     );
   },
 };
+

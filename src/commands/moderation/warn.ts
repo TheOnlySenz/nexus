@@ -1,12 +1,12 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { ModerationModule } from "../../modules/moderation/moderation";
 import { CommandSyntaxError } from "../../core/errors";
 
 export const warnCommand: Command = {
   name: "warn",
-  description: "Issue a formal warning to a community member.",
+  description: "Issue a gentle warning to a community member.",
   usage: "!warn <@user> <reason>",
   category: "moderation",
   permission: PermissionLevel.MODERATOR,
@@ -37,12 +37,15 @@ export const warnCommand: Command = {
     const userMention = formatUserMention(targetUserId);
 
     await ctx.reply(
-      `⚠️ **MEMBER WARNED**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**User:** ${userMention} (\`${targetUserId}\`)\n` +
-      `**Warning Count:** #${warningCount}\n` +
-      `**Reason:** ${reason}\n` +
-      `**Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}`
+      `⚠️ **GENTLE WARNING ISSUED** ⚠️\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 **Friend:** ${userMention} (\`${targetUserId}\`)\n` +
+      `🩹 **Warning Count:** #${warningCount}\n` +
+      `📝 **Reason:** ${reason}\n` +
+      `🛡️ **Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}\n` +
+      `${SAKURA_DIVIDER}\n` +
+      `*Please remember to follow our community guidelines! (｡•́︿•̀｡)*`
     );
   },
 };
+

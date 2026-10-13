@@ -100,9 +100,10 @@ export class AutomodModule {
       await withRetry(() =>
         rootServer.community.channelMessages.create({
           channelId: evt.channelId,
-          content: `🛡️ ${userMention} Your message was removed by Automod: **${violationReason}**.`,
+          content: `🌸 ${userMention} A gentle reminder: your message was removed (**${violationReason}**). Let's keep our community cozy and sweet! (｡•́︿•̀｡)`,
         })
       );
+
 
       // Record to warnings repo and moderation logs
       await this.warningsRepo.addModerationLog(

@@ -22,13 +22,13 @@ export const pingCommand: Command = {
     const elapsed = Date.now() - start;
 
     await ctx.reply(
-      `🏓 **PONG!**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `⏱️ **Internal Latency:** \`${elapsed}ms\`\n` +
-      `🤖 **Bot Version:** \`${CONSTANTS.VERSION}\`\n` +
-      `⚡ **Uptime:** \`${uptimeStr}\`\n` +
-      `💾 **Memory:** \`${memoryUsageMb} MB\`\n` +
-      `🟢 **Status:** Operational (Root-native)`
+      `🍡 **Pong!** (*^▽^*)\n` +
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───\n` +
+      `🍓 **Heartbeat:** \`${elapsed}ms\`\n` +
+      `🎀 **Mochi Version:** \`${CONSTANTS.VERSION}\`\n` +
+      `⏰ **Awake for:** \`${uptimeStr}\`\n` +
+      `☁️ **Memory:** \`${memoryUsageMb} MB\`\n` +
+      `✨ **Vibes:** Fluffy, cozy & operational!`
     );
   },
 };

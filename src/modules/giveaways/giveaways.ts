@@ -6,7 +6,7 @@ import {
   MessageGuid,
 } from "@rootsdk/server-bot";
 import { GiveawaysRepository } from "../../database/repositories/giveaways";
-import { formatUserMention } from "../../utils/formatting";
+import { formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { withRetry } from "../../core/rate-limiter";
 import { Logger } from "../../core/logger";
 
@@ -27,15 +27,16 @@ export class GiveawaysModule {
 
     // 1. Post initial giveaway announcement message
     const initialText = [
-      `🎉 **COMMUNITY GIVEAWAY** 🎉`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `**Prize:** ${prize}`,
-      `**Winners:** ${winnerCount}`,
-      `**Ends:** ${endsAt.toUTCString()}`,
-      `**Hosted by:** ${formatUserMention(creatorId)}`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `React with 🎉 or use \`!giveaway enter <id>\` to participate!`,
+      `🎁 **MOCHI COMMUNITY GIVEAWAY** 🎁`,
+      CUTE_DIVIDER,
+      `🎀 **Prize:** ${prize}`,
+      `✨ **Lucky Winners:** ${winnerCount}`,
+      `⏳ **Ends:** ${endsAt.toUTCString()}`,
+      `🌸 **Hosted by:** ${formatUserMention(creatorId)}`,
+      SAKURA_DIVIDER,
+      `React with 🎉 or use \`!giveaway enter <id>\` to participate! (◕ᴗ◕✿)`,
     ].join("\n");
+
 
     const message = await withRetry(() =>
       rootServer.community.channelMessages.create({
@@ -130,13 +131,13 @@ export class GiveawaysModule {
     }
 
     const resultMessage = [
-      `🎉 **GIVEAWAY ENDED** 🎉`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `**Prize:** ${giveaway.prize}`,
-      `**Winners:** ${winnerText}`,
-      `**Total Entries:** ${entries.length}`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `Congratulations to the winner(s)!`,
+      `🎁 **GIVEAWAY CONCLUDED** 🎁`,
+      CUTE_DIVIDER,
+      `🌸 **Prize:** ${giveaway.prize}`,
+      `🎉 **Winner(s):** ${winnerText}`,
+      `🎟️ **Total Entries:** ${entries.length}`,
+      SAKURA_DIVIDER,
+      `*(人´∀｀) Congratulations to our lovely winner(s)! Thank you everyone for joining!*`,
     ].join("\n");
 
     try {

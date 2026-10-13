@@ -50,14 +50,16 @@ export const rankCommand: Command = {
     const userMention = formatUserMention(targetUserId, targetName);
 
     const text = [
-      `📈 **NEXUS PROFILE: ${userMention}**`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `⭐ **Level:** ${level}`,
-      `🏆 **Rank:** ${rankStr}`,
-      `✨ **XP:** ${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()} (${percentage}%)`,
-      `📊 [${progressBar}]`,
-      `💬 **Messages:** ${messages.toLocaleString()}`,
-      `🎖️ **Achievements:** ${achievements.length}`,
+      `🌸 ˚｡⋆୨୧˚ **MOCHI PROFILE** ˚୨୧⋆｡˚ 🌸`,
+      `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───`,
+      `👤 **Mochi:** ${userMention}`,
+      `🎀 **Level:** \`${level}\``,
+      `🏆 **Leaderboard:** \`${rankStr}\``,
+      `✨ **XP:** \`${xp.toLocaleString()} / ${nextLevelXp.toLocaleString()}\``,
+      `🍡 **Progress:** \`[${progressBar}]\` **${percentage}%**`,
+      `💬 **Chat Messages:** \`${messages.toLocaleString()}\``,
+      `🍓 **Badges Unlocked:** \`${achievements.length}\``,
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───`,
     ].join("\n");
 
     await ctx.reply(text);

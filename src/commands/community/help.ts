@@ -4,8 +4,8 @@ import { CommandRouter } from "../../core/command-router";
 
 export const helpCommand: Command = {
   name: "help",
-  aliases: ["commands", "nexus"],
-  description: "View the list of available NEXUS commands or command details.",
+  aliases: ["commands", "mochi"],
+  description: "View the list of available commands or details about a command.",
   usage: "!help [command]",
   category: "community",
   permission: PermissionLevel.MEMBER,
@@ -17,7 +17,7 @@ export const helpCommand: Command = {
     if (targetCommandName) {
       const cmd = router.getCommand(targetCommandName);
       if (!cmd) {
-        await ctx.replyError(`Command \`${ctx.prefix}${targetCommandName}\` was not found.`);
+        await ctx.replyError(`🌸 Oh no! Command \`${ctx.prefix}${targetCommandName}\` was not found.`);
         return;
       }
 
@@ -25,44 +25,44 @@ export const helpCommand: Command = {
       const aliasesText = cmd.aliases && cmd.aliases.length > 0 ? cmd.aliases.map((a) => `\`!${a}\``).join(", ") : "None";
 
       await ctx.reply(
-        `📖 **COMMAND INFO: !${cmd.name}**\n` +
-        `━━━━━━━━━━━━━━━━━━\n` +
-        `**Description:** ${cmd.description}\n` +
-        `**Usage:** \`${cmd.usage}\`\n` +
-        `**Category:** \`${cmd.category}\`\n` +
-        `**Required Permission:** \`${permName}\`\n` +
-        `**Aliases:** ${aliasesText}`
+        `🌸 ˚｡⋆ **COMMAND INFO: !${cmd.name}** ⋆｡˚ 🌸\n` +
+        `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───\n` +
+        `📝 **Description:** ${cmd.description}\n` +
+        `🎀 **Usage:** \`${cmd.usage}\`\n` +
+        `📁 **Category:** \`${cmd.category}\`\n` +
+        `🔒 **Required Level:** \`${permName}\`\n` +
+        `✨ **Aliases:** ${aliasesText}`
       );
       return;
     }
 
-    // Full categorized help menu
+    // Full categorized cute help menu
     const lines = [
-      `🌐 **NEXUS COMMUNITY BOT**`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `🛡️ **Moderation**`,
-      `\`!warn <@user> <reason>\` • \`!warnings <@user>\` • \`!clearwarnings <@user>\``,
-      `\`!kick <@user> [reason]\` • \`!ban <@user> [time] [reason]\` • \`!purge <count>\``,
+      `🌸 ˚｡⋆୨୧˚ **M O C H I (もち)** ˚୨୧⋆｡˚ 🌸`,
+      `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───`,
+      `🍡 **General & Cozy**`,
+      `╰ \`!help\` • \`!ping\` • \`!server\` • \`!user\` • \`!stats\``,
+
       ``,
-      `📈 **Leveling & Engagement**`,
-      `\`!rank [@user]\` • \`!leaderboard\` • \`!rewards\``,
+      `🎀 **Engagement & Leveling**`,
+      `╰ \`!rank\` • \`!leaderboard\` • \`!rewards\``,
       ``,
-      `🎭 **Role Automation**`,
-      `\`!reactionrole <msgId> <emoji> <@role>\``,
+      `🍓 **Sweet Economy**`,
+      `╰ \`!balance\` • \`!daily\` • \`!transfer\``,
       ``,
-      `🎉 **Giveaways & Events**`,
-      `\`!giveaway create <time> <winners> <prize>\` • \`!giveaway enter <id>\``,
+      `🎉 **Events & Surprises**`,
+      `╰ \`!giveaway create\` • \`!giveaway enter\``,
       ``,
-      `💰 **Virtual Economy**`,
-      `\`!balance [@user]\` • \`!daily\` • \`!transfer <@user> <amount>\``,
+      `✨ **Role Automation**`,
+      `╰ \`!reactionrole\``,
       ``,
-      `📊 **Community & Analytics**`,
-      `\`!server\` • \`!user [@user]\` • \`!stats\` • \`!ping\``,
+      `🛡️ **Cozy Guard (Moderation)**`,
+      `╰ \`!warn\` • \`!warnings\` • \`!clearwarnings\` • \`!kick\` • \`!ban\` • \`!purge\``,
       ``,
-      `⚙️ **Administration**`,
-      `\`!settings\` • \`!settings set <key> <val>\``,
-      `━━━━━━━━━━━━━━━━━━`,
-      `Type \`!help <command>\` for detailed usage instructions.`,
+      `⚙️ **Community Settings**`,
+      `╰ \`!settings\` • \`!settings set <key> <val>\``,
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───`,
+      `*Type \`!help <command>\` for detailed usage instructions! (｡•̀ᴗ-)✧*`,
     ];
 
     await ctx.reply(lines.join("\n"));

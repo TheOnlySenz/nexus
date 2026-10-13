@@ -1,7 +1,7 @@
 import { rootServer, CommunityRoleGuid } from "@rootsdk/server-bot";
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractRoleId, formatRoleMention } from "../../utils/formatting";
+import { extractRoleId, formatRoleMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { XpRepository } from "../../database/repositories/xp";
 import { CommandSyntaxError } from "../../core/errors";
 
@@ -49,7 +49,7 @@ export const rewardsCommand: Command = {
 
       await xpRepo.setLevelReward(communityId, level, roleId, roleName);
       const roleMention = formatRoleMention(roleId, roleName);
-      await ctx.reply(`✅ Configured reward: Members reaching **Level ${level}** will automatically receive ${roleMention}.`);
+      await ctx.reply(`✨ Configured sweet reward: Reaching **Level ${level}** automatically gifts ${roleMention}! 🌸`);
       return;
     }
 
@@ -79,18 +79,19 @@ export const rewardsCommand: Command = {
     const rewards = await xpRepo.getLevelRewards(communityId);
     if (rewards.length === 0) {
       await ctx.reply(
-        "🎖️ **LEVEL REWARDS**\nNo level role rewards are configured yet. Admins can configure rewards with `!rewards add <level> <@role>`."
+        `🎖️ **LEVEL REWARDS** 🎖️\n${CUTE_DIVIDER}\nNo level role rewards are configured yet! Admins can set rewards with \`!rewards add <level> <@role>\`.\n${SAKURA_DIVIDER}`
       );
       return;
     }
 
     const rows = rewards.map((r) => {
       const mention = formatRoleMention(r.role_id, r.role_name);
-      return `• **Level ${r.level}** ➔ ${mention}`;
+      return `🌸 **Level ${r.level}** ➔ ${mention} ✨`;
     });
 
     await ctx.reply(
-      `🎖️ **COMMUNITY LEVEL REWARDS**\n━━━━━━━━━━━━━━━━━━\n${rows.join("\n")}`
+      `🎖️ **COZY LEVEL REWARDS** 🎖️\n${CUTE_DIVIDER}\n${rows.join("\n")}\n${SAKURA_DIVIDER}`
     );
   },
 };
+

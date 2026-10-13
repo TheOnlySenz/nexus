@@ -1,7 +1,7 @@
 import { UserGuid } from "@rootsdk/server-bot";
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { ModerationModule } from "../../modules/moderation/moderation";
 import { CommandSyntaxError } from "../../core/errors";
 
@@ -42,11 +42,13 @@ export const kickCommand: Command = {
 
     const userMention = formatUserMention(targetUserId);
     await ctx.reply(
-      `👢 **MEMBER KICKED**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**User:** ${userMention} (\`${targetUserId}\`)\n` +
-      `**Reason:** ${reason}\n` +
-      `**Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}`
+      `👢 **MEMBER DISMISSED** 👢\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 **Member:** ${userMention} (\`${targetUserId}\`)\n` +
+      `📝 **Reason:** ${reason}\n` +
+      `🛡️ **Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}\n` +
+      `${SAKURA_DIVIDER}`
     );
   },
 };
+

@@ -1,11 +1,12 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
 import { AnalyticsModule } from "../../modules/analytics/analytics";
+import { CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 
 export const statsCommand: Command = {
   name: "stats",
-  aliases: ["activity", "metrics"],
-  description: "View community activity and engagement analytics.",
+  aliases: ["activity", "metrics", "analytics"],
+  description: "View cozy community activity and engagement analytics.",
   usage: "!stats",
   category: "community",
   permission: PermissionLevel.MEMBER,
@@ -17,17 +18,18 @@ export const statsCommand: Command = {
     const stats = await analyticsModule.getCommunityStats(communityId);
 
     const lines = [
-      `📊 **NEXUS COMMUNITY ANALYTICS**`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `👥 **Total Members:** ${stats.memberCount > 0 ? stats.memberCount.toLocaleString() : "Active Community"}`,
-      `💬 **Messages (Last 7 Days):** ${stats.weeklyMessages.toLocaleString()}`,
-      `⚡ **Commands Executed:** ${stats.weeklyCommands.toLocaleString()}`,
-      `🛡️ **Moderation Actions:** ${stats.weeklyModActions.toLocaleString()}`,
-      `👋 **New Joins (Last 7 Days):** ${stats.weeklyNewMembers.toLocaleString()}`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `*Metrics are recorded live by NEXUS.*`,
+      `🌸 **MOCHI COMMUNITY SNAPSHOT** 🌸`,
+      CUTE_DIVIDER,
+      `🍡 **Cozy Members:** **${stats.memberCount > 0 ? stats.memberCount.toLocaleString() : "Active Community"}**`,
+      `💬 **Messages (7d):** **${stats.weeklyMessages.toLocaleString()}** cheerful chats`,
+      `✨ **Magic Commands:** **${stats.weeklyCommands.toLocaleString()}** casts`,
+      `🛡️ **Peacekeeper Actions:** **${stats.weeklyModActions.toLocaleString()}** logs`,
+      `🎀 **New Friends (7d):** **${stats.weeklyNewMembers.toLocaleString()}** blossoms`,
+      SAKURA_DIVIDER,
+      `*(◕ᴗ◕✿) Recorded with love by Mochi!*`,
     ];
 
     await ctx.reply(lines.join("\n"));
   },
 };
+

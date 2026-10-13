@@ -30,11 +30,11 @@ export const leaderboardCommand: Command = {
     });
 
     const text = [
-      `🏆 **NEXUS COMMUNITY LEADERBOARD**`,
-      `━━━━━━━━━━━━━━━━━━`,
+      `🌸 ˚｡⋆୨୧˚ **MOCHI HALL OF FAME** ˚୨୧⋆｡˚ 🌸`,
+      `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───`,
       ...rows,
-      `━━━━━━━━━━━━━━━━━━`,
-      `Keep participating to earn XP and level up!`,
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───`,
+      `*Chat and share good vibes to climb the leaderboard! (◕‿◕✿)*`,
     ].join("\n");
 
     await ctx.reply(text);

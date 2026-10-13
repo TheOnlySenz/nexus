@@ -1,6 +1,6 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { WarningsRepository } from "../../database/repositories/warnings";
 
 export const warningsCommand: Command = {
@@ -25,20 +25,22 @@ export const warningsCommand: Command = {
     const userMention = formatUserMention(targetUserId);
 
     if (warnings.length === 0) {
-      await ctx.reply(`✅ ${userMention} has no recorded warnings in this community.`);
+      await ctx.reply(`✨ ${userMention} has 0 warnings! A sparkling clean record! (◕ᴗ◕✿)`);
       return;
     }
 
     const list = warnings.slice(0, 10).map((w, i) => {
       const dateStr = w.created_at ? new Date(w.created_at).toLocaleDateString() : "N/A";
-      return `**#${warnings.length - i}** [${dateStr}] Reason: *${w.reason}* (by \`${w.moderator_id}\`)`;
+      return `• **#${warnings.length - i}** [${dateStr}] *${w.reason}* (by \`${w.moderator_id}\`)`;
     });
 
     await ctx.reply(
-      `🛡️ **WARNING HISTORY (${warnings.length})**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**Target User:** ${userMention} (\`${targetUserId}\`)\n\n` +
-      list.join("\n")
+      `🩹 **WARNING HISTORY (${warnings.length})** 🩹\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 **Member:** ${userMention} (\`${targetUserId}\`)\n\n` +
+      list.join("\n") +
+      `\n${SAKURA_DIVIDER}`
     );
   },
 };
+

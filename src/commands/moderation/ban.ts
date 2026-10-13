@@ -1,7 +1,7 @@
 import { UserGuid } from "@rootsdk/server-bot";
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { parseDuration } from "../../utils/time";
 import { ModerationModule } from "../../modules/moderation/moderation";
 import { CommandSyntaxError } from "../../core/errors";
@@ -57,12 +57,14 @@ export const banCommand: Command = {
     const durationText = expiresAt ? `Temporary (Expires: ${expiresAt.toUTCString()})` : "Permanent";
 
     await ctx.reply(
-      `🔨 **MEMBER BANNED**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `**User:** ${userMention} (\`${targetUserId}\`)\n` +
-      `**Duration:** ${durationText}\n` +
-      `**Reason:** ${reason}\n` +
-      `**Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}`
+      `🔨 **MEMBER REMOVED** 🔨\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 **Member:** ${userMention} (\`${targetUserId}\`)\n` +
+      `⏳ **Duration:** ${durationText}\n` +
+      `📝 **Reason:** ${reason}\n` +
+      `🛡️ **Moderator:** ${formatUserMention(ctx.authorId, ctx.authorName)}\n` +
+      `${SAKURA_DIVIDER}`
     );
   },
 };
+

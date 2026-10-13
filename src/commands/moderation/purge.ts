@@ -27,6 +27,7 @@ export const purgeCommand: Command = {
       ctx.authorId
     );
 
-    await ctx.reply(`🧹 **Cleaned ${deletedCount} message(s)** from this channel.`);
+    await ctx.reply(`🧹 **All tidy!** Swept away **${deletedCount}** message(s) from this channel! ✨`);
   },
 };
+

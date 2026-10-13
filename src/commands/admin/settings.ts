@@ -1,13 +1,13 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
 import { SettingsRepository } from "../../database/repositories/settings";
-import { extractChannelId, extractRoleId, formatChannelMention, formatRoleMention } from "../../utils/formatting";
+import { extractChannelId, extractRoleId, formatChannelMention, formatRoleMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { CommandSyntaxError } from "../../core/errors";
 
 export const settingsCommand: Command = {
   name: "settings",
   aliases: ["setup", "config"],
-  description: "View and configure NEXUS community settings.",
+  description: "View and configure cozy community settings.",
   usage: "!settings [set <key> <value>]",
   category: "admin",
   permission: PermissionLevel.ADMIN,
@@ -79,10 +79,10 @@ export const settingsCommand: Command = {
         default:
           await ctx.replyError(`Unknown setting key \`${key}\`. Valid keys: \`prefix\`, \`welcome\`, \`welcomechannel\`, \`welcomemsg\`, \`autorole\`, \`xp\`, \`automod\`, \`modlog\`, \`economy\`.`);
           return;
-      }
+        }
 
       await settingsRepo.saveSettings(current);
-      await ctx.reply(`✅ Updated setting **${key}** to \`${value}\`.`);
+      await ctx.reply(`🌸 **Setting updated!** Set **${key}** to \`${value}\`. ✨`);
       return;
     }
 
@@ -92,19 +92,20 @@ export const settingsCommand: Command = {
     const modLogStr = current.moderationLogChannelId ? formatChannelMention(current.moderationLogChannelId) : "None";
 
     const lines = [
-      `⚙️ **NEXUS SETTINGS & CONFIGURATION**`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `**Command Prefix:** \`${current.prefix}\``,
-      `**Welcome System:** ${current.welcomeEnabled ? "🟢 ENABLED" : "🔴 DISABLED"} (Channel: ${welcomeChStr})`,
-      `**Auto-Role Assignment:** ${current.autoRoleId ? `🟢 ENABLED (${autoRoleStr})` : "🔴 DISABLED"}`,
-      `**XP & Leveling:** ${current.xpEnabled ? "🟢 ENABLED" : "🔴 DISABLED"} (Cooldown: \`${current.xpCooldownSeconds}s\`)`,
-      `**Automod Engine:** ${current.automodEnabled ? "🟢 ENABLED" : "🔴 DISABLED"} (Spam threshold: \`${current.automodSpamThreshold}\`)`,
-      `**Moderation Log Channel:** ${modLogStr}`,
-      `**Virtual Economy:** ${current.economyEnabled ? "🟢 ENABLED" : "🔴 DISABLED"} (Daily: \`${current.dailyRewardAmount} ⬡\`)`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `To update a setting: \`!settings set <key> <value>\``,
+      `🌸 **MOCHI COMMUNITY SETTINGS** 🌸`,
+      CUTE_DIVIDER,
+      `✨ **Prefix:** \`${current.prefix}\``,
+      `🎀 **Welcome Greetings:** ${current.welcomeEnabled ? "🌸 ENABLED" : "⚪ DISABLED"} (Channel: ${welcomeChStr})`,
+      `🎖️ **Auto-Role:** ${current.autoRoleId ? `🌸 ENABLED (${autoRoleStr})` : "⚪ DISABLED"}`,
+      `⭐ **XP & Leveling:** ${current.xpEnabled ? "🌸 ENABLED" : "⚪ DISABLED"} (Cooldown: \`${current.xpCooldownSeconds}s\`)`,
+      `🛡️ **Automod Guardian:** ${current.automodEnabled ? "🌸 ENABLED" : "⚪ DISABLED"}`,
+      `📜 **Mod Log Channel:** ${modLogStr}`,
+      `🍡 **Mochi Economy:** ${current.economyEnabled ? "🌸 ENABLED" : "⚪ DISABLED"} (Daily: \`${current.dailyRewardAmount} 🍡\`)`,
+      SAKURA_DIVIDER,
+      `*Configure with: \`!settings set <key> <value>\`*`,
     ];
 
     await ctx.reply(lines.join("\n"));
   },
 };
+

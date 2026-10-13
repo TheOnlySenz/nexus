@@ -1,14 +1,14 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { EconomyModule } from "../../modules/economy/economy";
 import { SettingsRepository } from "../../database/repositories/settings";
 import { CommandSyntaxError } from "../../core/errors";
 
 export const transferCommand: Command = {
   name: "transfer",
-  aliases: ["pay", "givecredits", "send"],
-  description: "Transfer credits to another community member.",
+  aliases: ["pay", "givecredits", "send", "gift"],
+  description: "Gift sweet treats to another community member.",
   usage: "!transfer <@user> <amount>",
   category: "economy",
   permission: PermissionLevel.MEMBER,
@@ -43,10 +43,12 @@ export const transferCommand: Command = {
     const recipientMention = formatUserMention(targetUserId);
 
     await ctx.reply(
-      `💸 **TRANSFER SUCCESSFUL**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `${senderMention} sent **${amountArg.toLocaleString()}** ${settings.currencySymbol} to ${recipientMention}!\n` +
-      `Your Remaining Balance: **${newSenderBalance.toLocaleString()}** ${settings.currencySymbol}`
+      `🍡 **SWEET TREAT DELIVERED!** 🍡\n` +
+      `${CUTE_DIVIDER}\n` +
+      `🌸 ${senderMention} gifted **${amountArg.toLocaleString()}** ${settings.currencySymbol} to ${recipientMention}! (人´∀｀)\n` +
+      `🎀 Your remaining balance: **${newSenderBalance.toLocaleString()}** ${settings.currencySymbol}\n` +
+      `${SAKURA_DIVIDER}`
     );
   },
 };
+

@@ -1,7 +1,7 @@
 import { rootServer, ChannelGuid } from "@rootsdk/server-bot";
 import { AchievementsRepository, ACHIEVEMENTS } from "../../database/repositories/achievements";
 import { XpRepository } from "../../database/repositories/xp";
-import { formatUserMention } from "../../utils/formatting";
+import { formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { withRetry } from "../../core/rate-limiter";
 import { Logger } from "../../core/logger";
 
@@ -35,7 +35,14 @@ export class AchievementsModule {
     // Announce achievement if channelId provided
     if (channelId) {
       const userMention = formatUserMention(userId);
-      const text = `🏆 **ACHIEVEMENT UNLOCKED!**\nCongratulations ${userMention}! You earned **${ach.name}**\n*${ach.description}* (+${ach.rewardXp} XP)`;
+      const text = [
+        `🏆 **ACHIEVEMENT UNLOCKED!** 🏆`,
+        CUTE_DIVIDER,
+        `Congratulations ${userMention}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧`,
+        `🎀 **${ach.name}**`,
+        `*${ach.description}* (+${ach.rewardXp} XP)`,
+        SAKURA_DIVIDER,
+      ].join("\n");
 
       try {
         await withRetry(() =>
@@ -52,3 +59,4 @@ export class AchievementsModule {
     return true;
   }
 }
+

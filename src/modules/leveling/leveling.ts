@@ -3,7 +3,7 @@ import { XpRepository } from "../../database/repositories/xp";
 import { SettingsRepository } from "../../database/repositories/settings";
 import { AchievementsModule } from "../achievements/achievements";
 import { CooldownManager, withRetry } from "../../core/rate-limiter";
-import { formatUserMention, formatRoleMention } from "../../utils/formatting";
+import { formatUserMention, formatRoleMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { Logger } from "../../core/logger";
 
 const logger = new Logger("LevelingModule");
@@ -82,7 +82,7 @@ export class LevelingModule {
             })
           );
           const roleMention = formatRoleMention(reward.role_id, reward.role_name);
-          rewardText = `\n🎖️ **Role Unlocked:** ${roleMention}`;
+          rewardText = `\n🌸 **New Role Unlocked:** ${roleMention} ✨`;
           logger.info(`Assigned level ${newLevel} role reward (${reward.role_name}) to user ${userId}`);
         } catch (roleErr) {
           logger.warn(`Could not assign level role reward to ${userId}`, { roleErr });
@@ -92,7 +92,14 @@ export class LevelingModule {
       // Announce level up if enabled
       if (settings.levelAnnouncements) {
         const userMention = formatUserMention(userId);
-        const text = `🎉 **LEVEL UP!**\nCongratulations ${userMention}! You reached **Level ${newLevel}**!${rewardText}`;
+        const text = [
+          `🌸 **MOCHI LEVEL UP!** 🌸`,
+          CUTE_DIVIDER,
+          `Yay, congratulations ${userMention}! (｡•̀ᴗ-)✧`,
+          `✨ You blossomed to **Level ${newLevel}**! ✨${rewardText}`,
+          SAKURA_DIVIDER,
+          `*(◕ᴗ◕✿) Keep on chatting and smiling!*`,
+        ].join("\n");
 
         try {
           await withRetry(() =>
@@ -108,3 +115,4 @@ export class LevelingModule {
     }
   }
 }
+

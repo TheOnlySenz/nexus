@@ -23,19 +23,23 @@ export const dailyCommand: Command = {
 
     if (!result.success) {
       await ctx.reply(
-        `⏳ ${userMention} You have already claimed your daily reward!\n` +
-        `Please return in **${result.remainingTimeText}**.\n` +
-        `Current Balance: **${result.balance.toLocaleString()}** ${settings.currencySymbol}`
+        `🍡 **All Treats Nibbled!** (｡•́︿•̀｡)\n` +
+        `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───\n` +
+        `Aww ${userMention}, your daily treats are on cooldown!\n` +
+        `⏳ **Next delivery in:** \`${result.remainingTimeText}\`\n` +
+        `👛 **Current Pocket:** \`${result.balance.toLocaleString()} ${settings.currencySymbol}\``
       );
       return;
     }
 
     await ctx.reply(
-      `🎉 **DAILY REWARD CLAIMED!**\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `Congratulations ${userMention}!\n` +
-      `You received: **+${result.gained.toLocaleString()}** ${settings.currencySymbol}\n` +
-      `New Balance: **${result.balance.toLocaleString()}** ${settings.currencySymbol}`
+      `🍡 ˚｡⋆୨୧˚ **DAILY MOCHI TREATS!** ˚୨୧⋆｡˚ 🌸\n` +
+      `─── ･ ｡ﾟ☆: *. 🍡 .* :☆ﾟ. ───\n` +
+      `Yay ${userMention}! (*＾ω＾)ノ\n` +
+      `🎁 **Snack Basket:** \`+${result.gained.toLocaleString()} ${settings.currencySymbol}\`\n` +
+      `👛 **Total Balance:** \`${result.balance.toLocaleString()} ${settings.currencySymbol}\`\n` +
+      `─── ･ ｡ﾟ☆: *. 🌸 .* :☆ﾟ. ───\n` +
+      `*Don't forget to visit tomorrow for more sweet treats! 🍓*`
     );
   },
 };

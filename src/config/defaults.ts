@@ -4,7 +4,7 @@ export const DEFAULT_SETTINGS: Omit<CommunitySettings, "communityId" | "updatedA
   prefix: "!",
   welcomeEnabled: false,
   welcomeChannelId: null,
-  welcomeMessage: "👋 Welcome {user} to the community! You are member #{memberCount}.",
+  welcomeMessage: "🌸･ﾟ✧ Welcome {user} to our cozy community! You are our #{memberCount} little mochi! (*＾▽＾)ノ",
   autoRoleId: null,
   xpEnabled: true,
   xpCooldownSeconds: 60,
@@ -17,13 +17,13 @@ export const DEFAULT_SETTINGS: Omit<CommunitySettings, "communityId" | "updatedA
   automodSpamThreshold: 5,
   moderationLogChannelId: null,
   economyEnabled: true,
-  currencyName: "Nexus Credits",
-  currencySymbol: "⬡",
+  currencyName: "Mochi Bites",
+  currencySymbol: "🍡",
   dailyRewardAmount: 100,
 };
 
 export const CONSTANTS = {
-  BOT_NAME: "NEXUS",
+  BOT_NAME: "Mochi (もち) 🍡",
   VERSION: "1.0.0",
   DEFAULT_PAGE_SIZE: 10,
   MAX_WARNINGS_DISPLAY: 10,
