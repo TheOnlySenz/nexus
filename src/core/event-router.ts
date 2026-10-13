@@ -188,14 +188,22 @@ export class EventRouter {
       // Fallback
     }
 
+    // Check owner status
+    let isOwner = false;
+    if (this.deps.permissionManager.getOwnerId()) {
+      isOwner = this.deps.permissionManager.getOwnerId() === evt.userId;
+    }
+
     const permissionLevel = await this.deps.permissionManager.resolvePermissionLevel(
       {
         userId: evt.userId,
         communityId,
         memberRoles,
+        isOwner,
       },
       isGlobalAdminOrMod
     );
+
 
     // Resolve author name from referenceMaps or fallback
     let authorName = "Member";

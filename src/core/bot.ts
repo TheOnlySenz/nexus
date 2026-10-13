@@ -114,6 +114,38 @@ export class NexusBot {
       );
     }
 
+    // Resolve community details and owner
+    try {
+      if (rootServer?.community?.communities) {
+        const community = await rootServer.community.communities.get();
+        if (community) {
+          logger.info(`Attached to community: "${community.name}" (${community.communityId})`);
+          if (community.ownerUserId) {
+            this.permissionManager.setOwnerId(community.ownerUserId);
+            logger.info(`Community owner identified: ${community.ownerUserId}`);
+          }
+        }
+      }
+    } catch (commErr) {
+      logger.warn("Could not query community info on startup", { commErr });
+    }
+
+    // Fetch live roles if available
+    try {
+      if (rootServer?.community?.communityRoles) {
+        const roles = await rootServer.community.communityRoles.list();
+        if (roles && roles.length > 0) {
+          for (const r of roles) {
+            this.permissionManager.addOrUpdateRole(r.id, r.name, r.communityPermission, r.channelPermission);
+          }
+          logger.info(`Loaded ${roles.length} live community roles`);
+        }
+      }
+    } catch (roleErr) {
+      // Fallback
+    }
+
+
     // 4. Initialize Feature Modules
     this.analyticsModule = new AnalyticsModule(this.analyticsRepo);
     this.achievementsModule = new AchievementsModule(this.achievementsRepo, this.xpRepo);
