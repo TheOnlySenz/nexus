@@ -1,6 +1,6 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, extractUserName, formatUserMention } from "../../utils/formatting";
 import { EconomyModule } from "../../modules/economy/economy";
 import { SettingsRepository } from "../../database/repositories/settings";
 
@@ -25,9 +25,10 @@ export const balanceCommand: Command = {
       const extracted = extractUserId(ctx.args[0]);
       if (extracted) {
         targetUserId = extracted as any;
-        targetName = "Member";
+        targetName = extractUserName(ctx.args[0]) || "Member";
       }
     }
+
 
     const bal = await economyModule.getBalance(communityId, targetUserId);
     const userMention = formatUserMention(targetUserId, targetName);

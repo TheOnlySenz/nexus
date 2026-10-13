@@ -101,6 +101,24 @@ export class GiveawaysModule {
     return this.giveawaysRepo.addEntry(giveawayId, userId);
   }
 
+  async handleReaction(messageId: string, userId: string, emojiShortcode: string): Promise<boolean> {
+    if (emojiShortcode !== ":tada:" && emojiShortcode !== "🎉") {
+      return false;
+    }
+
+    const giveaway = await this.giveawaysRepo.getByMessageId(messageId);
+    if (!giveaway || giveaway.status !== "active") {
+      return false;
+    }
+
+    const entered = await this.enterGiveaway(giveaway.id, userId);
+    if (entered) {
+      logger.info(`User ${userId} entered giveaway ${giveaway.id} via reaction 🎉`);
+    }
+    return entered;
+  }
+
+
   async concludeGiveaway(giveawayId: string): Promise<void> {
     const giveaway = await this.giveawaysRepo.getById(giveawayId);
     if (!giveaway || giveaway.status !== "active") return;

@@ -56,9 +56,14 @@ export class DatabaseError extends NexusError {
 }
 
 export function formatErrorMessage(err: unknown): string {
+  if (err instanceof CommandSyntaxError) {
+    return `🌸 **Oops! Let's check the command format:**\n${err.message}`;
+  }
+
   if (err instanceof NexusError) {
     return `⚠️ **${err.message}**`;
   }
+
 
   if (err instanceof RootApiException) {
     switch (err.errorCode) {

@@ -41,6 +41,11 @@ export class GiveawaysRepository {
     return this.db.get<GiveawayRecord>(`SELECT * FROM giveaways WHERE id = ?`, [id]);
   }
 
+  async getByMessageId(messageId: string): Promise<GiveawayRecord | undefined> {
+    return this.db.get<GiveawayRecord>(`SELECT * FROM giveaways WHERE message_id = ?`, [messageId]);
+  }
+
+
   async getActive(communityId: string): Promise<GiveawayRecord[]> {
     return this.db.all<GiveawayRecord>(
       `SELECT * FROM giveaways WHERE community_id = ? AND status = 'active' ORDER BY ends_at ASC`,

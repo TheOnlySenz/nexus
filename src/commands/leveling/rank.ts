@@ -1,6 +1,6 @@
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention } from "../../utils/formatting";
+import { extractUserId, extractUserName, formatUserMention } from "../../utils/formatting";
 import { XpRepository, calculateXpRequiredForLevel } from "../../database/repositories/xp";
 import { AchievementsRepository } from "../../database/repositories/achievements";
 
@@ -23,9 +23,10 @@ export const rankCommand: Command = {
       const extracted = extractUserId(ctx.args[0]);
       if (extracted) {
         targetUserId = extracted as any;
-        targetName = "Member";
+        targetName = extractUserName(ctx.args[0]) || "Member";
       }
     }
+
 
     const communityId = ctx.message.communityId || "default";
     const userRecord = await xpRepo.getUserXp(communityId, targetUserId);

@@ -1,7 +1,7 @@
 import { rootServer, UserGuid } from "@rootsdk/server-bot";
 import { Command, CommandContext } from "../../types/commands";
 import { PermissionLevel } from "../../core/permissions";
-import { extractUserId, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
+import { extractUserId, extractUserName, formatUserMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { XpRepository } from "../../database/repositories/xp";
 import { WarningsRepository } from "../../database/repositories/warnings";
 import { EconomyRepository } from "../../database/repositories/economy";
@@ -31,8 +31,9 @@ export const userCommand: Command = {
     const communityId = ctx.message.communityId || "default";
 
     // 1. Fetch Root member profile
-    let nickname = "Member";
+    let nickname = (ctx.args[0] ? extractUserName(ctx.args[0]) : null) || (targetUserId === ctx.authorId ? ctx.authorName : "Member");
     let roleCount = 0;
+
     try {
       const member = await withRetry(() =>
         rootServer.community.communityMembers.get({ userId: targetUserId })

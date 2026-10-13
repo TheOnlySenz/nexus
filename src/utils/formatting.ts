@@ -37,6 +37,16 @@ export function extractUserId(input: string): string | null {
 }
 
 /**
+ * Extracts a display name from a Root mention `[@Name](root://user/{id})` if present.
+ */
+export function extractUserName(input: string): string | null {
+  if (!input) return null;
+  const match = input.match(/\[@([^\]]+)\]\(root:\/\/user\/[A-Za-z0-9_-]+\)/i);
+  return match ? match[1] : null;
+}
+
+
+/**
  * Extracts a CommunityRoleGuid from either a Root mention `[@Name](root://role/{id})` or a raw ID.
  */
 export function extractRoleId(input: string): string | null {

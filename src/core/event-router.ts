@@ -249,7 +249,12 @@ export class EventRouter {
   private async onReactionCreated(evt: ChannelMessageReactionCreatedEvent): Promise<void> {
     const communityId = evt.communityId || "default";
     await this.deps.reactionRolesModule.handleReactionCreated(evt, communityId);
+
+    if (evt.messageId && evt.userId) {
+      await this.deps.giveawaysModule.handleReaction(evt.messageId, evt.userId, evt.shortcode || "");
+    }
   }
+
 
   private async onReactionDeleted(evt: ChannelMessageReactionDeletedEvent): Promise<void> {
     const communityId = evt.communityId || "default";

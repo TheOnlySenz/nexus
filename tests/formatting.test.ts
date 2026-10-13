@@ -4,6 +4,7 @@ import {
   formatRoleMention,
   formatChannelMention,
   extractUserId,
+  extractUserName,
   extractRoleId,
   extractChannelId,
   formatNumber,
@@ -53,8 +54,15 @@ describe("Root Formatting Utils", () => {
     expect(extractChannelId("short")).toBeNull();
   });
 
+  it("should extract user name from Root URI mentions", () => {
+    expect(extractUserName("[@Saad](root://user/usr_abc12345)")).toBe("Saad");
+    expect(extractUserName("[@Senzpy](root://user/0031ccb0-5f78-8c01-a333-44d9996fb339)")).toBe("Senzpy");
+    expect(extractUserName("plain_text")).toBeNull();
+  });
+
   it("should format numbers with comma separation", () => {
     expect(formatNumber(1000)).toBe("1,000");
     expect(formatNumber(1234567)).toBe("1,234,567");
   });
 });
+

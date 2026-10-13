@@ -90,8 +90,19 @@ export const giveawayCommand: Command = {
       return;
     }
 
-    // 4. List active giveaways
+    // 4. Validate subcommand if provided
+    if (subCommand && subCommand !== "list") {
+      throw new CommandSyntaxError(
+        "• Create: `!giveaway create <duration> <winners> <prize>`\n" +
+        "• Enter: `!giveaway enter <giveawayId>`\n" +
+        "• List: `!giveaway list`\n" +
+        "• End early: `!giveaway end <giveawayId>`"
+      );
+    }
+
+    // 5. List active giveaways
     const active = await giveawaysRepo.getActive(communityId);
+
     if (active.length === 0) {
       await ctx.reply("🎁 No active giveaways right now! Check back soon for sweet surprises! 🍡");
       return;

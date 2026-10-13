@@ -12,7 +12,8 @@ export const helpCommand: Command = {
   cooldownMs: 2000,
   execute: async (ctx: CommandContext) => {
     const router = ctx.services.commandRouter as CommandRouter;
-    const targetCommandName = ctx.args[0]?.toLowerCase();
+    const rawTarget = ctx.args[0]?.trim();
+    const targetCommandName = rawTarget ? rawTarget.replace(/^[!/]/, "").toLowerCase() : undefined;
 
     if (targetCommandName) {
       const cmd = router.getCommand(targetCommandName);
@@ -20,6 +21,7 @@ export const helpCommand: Command = {
         await ctx.replyError(`🌸 Oh no! Command \`${ctx.prefix}${targetCommandName}\` was not found.`);
         return;
       }
+
 
       const permName = PermissionLevel[cmd.permission];
       const aliasesText = cmd.aliases && cmd.aliases.length > 0 ? cmd.aliases.map((a) => `\`!${a}\``).join(", ") : "None";
