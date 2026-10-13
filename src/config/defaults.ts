@@ -20,6 +20,9 @@ export const DEFAULT_SETTINGS: Omit<CommunitySettings, "communityId" | "updatedA
   currencyName: "Mochi Bites",
   currencySymbol: "🍡",
   dailyRewardAmount: 100,
+  confessionChannelId: null,
+  starboardChannelId: null,
+  starboardThreshold: 3,
 };
 
 export const CONSTANTS = {

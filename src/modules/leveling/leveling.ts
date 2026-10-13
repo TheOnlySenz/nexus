@@ -6,6 +6,8 @@ import { CooldownManager, withRetry } from "../../core/rate-limiter";
 import { formatUserMention, formatRoleMention, CUTE_DIVIDER, SAKURA_DIVIDER } from "../../utils/formatting";
 import { Logger } from "../../core/logger";
 
+import { ShopRepository } from "../../database/repositories/shop";
+
 const logger = new Logger("LevelingModule");
 
 export class LevelingModule {
@@ -14,7 +16,8 @@ export class LevelingModule {
   constructor(
     private readonly xpRepo: XpRepository,
     private readonly settingsRepo: SettingsRepository,
-    private readonly achievementsModule: AchievementsModule
+    private readonly achievementsModule: AchievementsModule,
+    private readonly shopRepo?: ShopRepository
   ) {}
 
   async processMessageXp(
@@ -38,7 +41,19 @@ export class LevelingModule {
     // Generate random XP between min and max
     const min = settings.minXpPerMessage;
     const max = settings.maxXpPerMessage;
-    const awarded = Math.floor(Math.random() * (max - min + 1)) + min;
+    let awarded = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Apply active booster multiplier if user has an active double XP booster
+    if (this.shopRepo) {
+      try {
+        const booster = await this.shopRepo.getActiveBooster(communityId, userId, "xp");
+        if (booster && booster.multiplier > 1) {
+          awarded = Math.round(awarded * booster.multiplier);
+        }
+      } catch (boosterErr) {
+        logger.warn("Could not check booster multiplier", { boosterErr });
+      }
+    }
 
     const { record, leveledUp, oldLevel, newLevel } = await this.xpRepo.addXp(
       communityId,

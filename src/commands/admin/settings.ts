@@ -76,8 +76,35 @@ export const settingsCommand: Command = {
         case "economy":
           current.economyEnabled = value.toLowerCase() === "on" || value.toLowerCase() === "true" || value.toLowerCase() === "yes";
           break;
+        case "confessionchannel": {
+          const chId = extractChannelId(value);
+          if (!chId) {
+            await ctx.replyError("Invalid channel specified. Please mention a valid channel or provide its ID.");
+            return;
+          }
+          current.confessionChannelId = chId as any;
+          break;
+        }
+        case "starboardchannel": {
+          const chId = extractChannelId(value);
+          if (!chId) {
+            await ctx.replyError("Invalid channel specified. Please mention a valid channel or provide its ID.");
+            return;
+          }
+          current.starboardChannelId = chId as any;
+          break;
+        }
+        case "starboardthreshold": {
+          const num = parseInt(value, 10);
+          if (isNaN(num) || num <= 0) {
+            await ctx.replyError("Please enter a valid positive number for starboard threshold (e.g. 3).");
+            return;
+          }
+          current.starboardThreshold = num;
+          break;
+        }
         default:
-          await ctx.replyError(`Unknown setting key \`${key}\`. Valid keys: \`prefix\`, \`welcome\`, \`welcomechannel\`, \`welcomemsg\`, \`autorole\`, \`xp\`, \`automod\`, \`modlog\`, \`economy\`.`);
+          await ctx.replyError(`Unknown setting key \`${key}\`. Valid keys: \`prefix\`, \`welcome\`, \`welcomechannel\`, \`welcomemsg\`, \`autorole\`, \`xp\`, \`automod\`, \`modlog\`, \`economy\`, \`confessionchannel\`, \`starboardchannel\`, \`starboardthreshold\`.`);
           return;
         }
 
@@ -90,6 +117,8 @@ export const settingsCommand: Command = {
     const welcomeChStr = current.welcomeChannelId ? formatChannelMention(current.welcomeChannelId) : "None";
     const autoRoleStr = current.autoRoleId ? formatRoleMention(current.autoRoleId) : "None";
     const modLogStr = current.moderationLogChannelId ? formatChannelMention(current.moderationLogChannelId) : "None";
+    const confessionChStr = current.confessionChannelId ? formatChannelMention(current.confessionChannelId) : "Current Channel";
+    const starboardChStr = current.starboardChannelId ? formatChannelMention(current.starboardChannelId) : "None";
 
     const lines = [
       `🌸 **MOCHI COMMUNITY SETTINGS** 🌸`,
@@ -101,6 +130,8 @@ export const settingsCommand: Command = {
       `🛡️ **Automod Guardian:** ${current.automodEnabled ? "🌸 ENABLED" : "⚪ DISABLED"}`,
       `📜 **Mod Log Channel:** ${modLogStr}`,
       `🍡 **Mochi Economy:** ${current.economyEnabled ? "🌸 ENABLED" : "⚪ DISABLED"} (Daily: \`${current.dailyRewardAmount} 🍡\`)`,
+      `💌 **Confessions Channel:** ${confessionChStr}`,
+      `⭐ **Starboard Channel:** ${starboardChStr} (Threshold: \`${current.starboardThreshold || 3} ⭐\`)`,
       SAKURA_DIVIDER,
       `*Configure with: \`!settings set <key> <value>\`*`,
     ];

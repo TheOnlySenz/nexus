@@ -8,7 +8,8 @@ export type CommandCategory =
   | "community"
   | "automation"
   | "admin"
-  | "economy";
+  | "economy"
+  | "games";
 
 export interface CommandContext {
   message: ChannelMessageCreatedEvent;

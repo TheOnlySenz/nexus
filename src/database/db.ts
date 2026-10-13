@@ -34,6 +34,10 @@ export class DatabaseManager {
               return reject(new DatabaseError(`Failed to apply schema: ${schemaErr.message}`, schemaErr));
             }
 
+            this.db!.run("ALTER TABLE community_settings ADD COLUMN confession_channel_id TEXT;", () => {});
+            this.db!.run("ALTER TABLE community_settings ADD COLUMN starboard_channel_id TEXT;", () => {});
+            this.db!.run("ALTER TABLE community_settings ADD COLUMN starboard_threshold INTEGER NOT NULL DEFAULT 3;", () => {});
+
             this.isInitialized = true;
             logger.info("SQLite database schema initialized successfully");
             resolve();

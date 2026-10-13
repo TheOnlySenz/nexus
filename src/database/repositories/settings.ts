@@ -54,6 +54,9 @@ export class SettingsRepository {
       currencyName: String(row.currency_name ?? DEFAULT_SETTINGS.currencyName),
       currencySymbol: String(row.currency_symbol ?? DEFAULT_SETTINGS.currencySymbol),
       dailyRewardAmount: Number(row.daily_reward_amount ?? DEFAULT_SETTINGS.dailyRewardAmount),
+      confessionChannelId: (row.confession_channel_id as ChannelGuid) || null,
+      starboardChannelId: (row.starboard_channel_id as ChannelGuid) || null,
+      starboardThreshold: Number(row.starboard_threshold ?? DEFAULT_SETTINGS.starboardThreshold),
       updatedAt: String(row.updated_at),
     };
   }
@@ -66,8 +69,9 @@ export class SettingsRepository {
         auto_role_id, xp_enabled, xp_cooldown_seconds, min_xp_per_message, max_xp_per_message,
         level_announcements, automod_enabled, automod_block_links, automod_block_words,
         automod_spam_threshold, moderation_log_channel_id, economy_enabled, currency_name,
-        currency_symbol, daily_reward_amount, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        currency_symbol, daily_reward_amount, confession_channel_id, starboard_channel_id,
+        starboard_threshold, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(community_id) DO UPDATE SET
         prefix = excluded.prefix,
         welcome_enabled = excluded.welcome_enabled,
@@ -88,6 +92,9 @@ export class SettingsRepository {
         currency_name = excluded.currency_name,
         currency_symbol = excluded.currency_symbol,
         daily_reward_amount = excluded.daily_reward_amount,
+        confession_channel_id = excluded.confession_channel_id,
+        starboard_channel_id = excluded.starboard_channel_id,
+        starboard_threshold = excluded.starboard_threshold,
         updated_at = excluded.updated_at`,
       [
         settings.communityId,
@@ -110,6 +117,9 @@ export class SettingsRepository {
         settings.currencyName,
         settings.currencySymbol,
         settings.dailyRewardAmount,
+        settings.confessionChannelId,
+        settings.starboardChannelId,
+        settings.starboardThreshold,
         now,
       ]
     );

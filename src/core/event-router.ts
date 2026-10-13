@@ -27,6 +27,8 @@ import { WelcomeModule } from "../modules/welcome/welcome";
 import { ReactionRolesModule } from "../modules/roles/reaction-roles";
 import { GiveawaysModule } from "../modules/giveaways/giveaways";
 import { AnalyticsModule } from "../modules/analytics/analytics";
+import { StarboardModule } from "../modules/starboard/starboard";
+import { RemindersModule } from "../modules/reminders/reminders";
 import { CommandContext } from "../types/commands";
 import { withRetry } from "./rate-limiter";
 import { Logger } from "./logger";
@@ -43,6 +45,8 @@ export interface EventRouterDependencies {
   reactionRolesModule: ReactionRolesModule;
   giveawaysModule: GiveawaysModule;
   analyticsModule: AnalyticsModule;
+  starboardModule?: StarboardModule;
+  remindersModule?: RemindersModule;
   services: Record<string, unknown>;
 }
 
@@ -253,6 +257,10 @@ export class EventRouter {
     if (evt.messageId && evt.userId) {
       await this.deps.giveawaysModule.handleReaction(evt.messageId, evt.userId, evt.shortcode || "");
     }
+
+    if (this.deps.starboardModule) {
+      await this.deps.starboardModule.handleReactionCreated(evt, communityId);
+    }
   }
 
 
@@ -268,5 +276,8 @@ export class EventRouter {
   private async onJob(data: JobData): Promise<void> {
     logger.info(`Root JobScheduler event fired: resourceId=${data.resourceId}, tag=${data.tag}`);
     await this.deps.giveawaysModule.handleJobEvent(data);
+    if (this.deps.remindersModule) {
+      await this.deps.remindersModule.handleJobEvent(data);
+    }
   }
 }

@@ -17,9 +17,12 @@ CREATE TABLE IF NOT EXISTS community_settings (
   automod_spam_threshold INTEGER NOT NULL DEFAULT 5,
   moderation_log_channel_id TEXT,
   economy_enabled INTEGER NOT NULL DEFAULT 1,
-  currency_name TEXT NOT NULL DEFAULT 'Nexus Credits',
-  currency_symbol TEXT NOT NULL DEFAULT '⬡',
+  currency_name TEXT NOT NULL DEFAULT 'Mochi Bites',
+  currency_symbol TEXT NOT NULL DEFAULT '🍡',
   daily_reward_amount INTEGER NOT NULL DEFAULT 100,
+  confession_channel_id TEXT,
+  starboard_channel_id TEXT,
+  starboard_threshold INTEGER NOT NULL DEFAULT 3,
   updated_at TEXT NOT NULL
 );
 
@@ -132,4 +135,69 @@ CREATE TABLE IF NOT EXISTS analytics_daily (
   new_members INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (community_id, date)
 );
+
+CREATE TABLE IF NOT EXISTS shop_items (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  price INTEGER NOT NULL,
+  icon TEXT NOT NULL,
+  type TEXT NOT NULL,
+  effect_value REAL NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS user_inventory (
+  community_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  item_id TEXT NOT NULL,
+  quantity INTEGER NOT NULL DEFAULT 1,
+  acquired_at TEXT NOT NULL,
+  PRIMARY KEY (community_id, user_id, item_id)
+);
+
+CREATE TABLE IF NOT EXISTS active_boosters (
+  community_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  booster_type TEXT NOT NULL,
+  multiplier REAL NOT NULL,
+  expires_at TEXT NOT NULL,
+  PRIMARY KEY (community_id, user_id, booster_type)
+);
+
+CREATE TABLE IF NOT EXISTS community_pet (
+  community_id TEXT PRIMARY KEY,
+  name TEXT NOT NULL DEFAULT 'Mochi-chan (もちちゃん)',
+  level INTEGER NOT NULL DEFAULT 1,
+  xp INTEGER NOT NULL DEFAULT 0,
+  hunger INTEGER NOT NULL DEFAULT 100,
+  happiness INTEGER NOT NULL DEFAULT 100,
+  last_fed_at TEXT,
+  last_petted_at TEXT,
+  total_treats INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS starboard_messages (
+  community_id TEXT NOT NULL,
+  original_message_id TEXT NOT NULL,
+  starboard_message_id TEXT NOT NULL,
+  channel_id TEXT NOT NULL,
+  author_id TEXT NOT NULL,
+  star_count INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  PRIMARY KEY (community_id, original_message_id)
+);
+
+CREATE TABLE IF NOT EXISTS reminders (
+  id TEXT PRIMARY KEY,
+  community_id TEXT NOT NULL,
+  channel_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  message TEXT NOT NULL,
+  remind_at TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending'
+);
+
+CREATE INDEX IF NOT EXISTS idx_reminders_status ON reminders(status, remind_at);
 `;
+

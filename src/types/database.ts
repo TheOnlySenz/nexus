@@ -93,3 +93,63 @@ export interface AnalyticsDailyRecord {
   moderation_actions: number;
   new_members: number;
 }
+
+export interface ShopItemRecord {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  icon: string;
+  type: "booster" | "collectible" | "snack";
+  effect_value: number; // e.g. multiplier 1.5 or duration hours
+}
+
+export interface UserInventoryRecord {
+  community_id: string;
+  user_id: string;
+  item_id: string;
+  quantity: number;
+  acquired_at: string;
+}
+
+export interface ActiveBoosterRecord {
+  community_id: string;
+  user_id: string;
+  booster_type: string;
+  multiplier: number;
+  expires_at: string;
+}
+
+export interface CommunityPetRecord {
+  community_id: string;
+  name: string;
+  level: number;
+  xp: number;
+  hunger: number; // 0 - 100
+  happiness: number; // 0 - 100
+  last_fed_at: string | null;
+  last_petted_at: string | null;
+  total_treats: number;
+}
+
+export interface StarboardRecord {
+  community_id: string;
+  original_message_id: string;
+  starboard_message_id: string;
+  channel_id: string;
+  author_id: string;
+  star_count: number;
+  created_at: string;
+}
+
+export interface ReminderRecord {
+  id: string;
+  community_id: string;
+  channel_id: string;
+  user_id: string;
+  message: string;
+  remind_at: string;
+  created_at: string;
+  status: "pending" | "delivered" | "cancelled";
+}
+

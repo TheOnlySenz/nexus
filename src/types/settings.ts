@@ -21,5 +21,9 @@ export interface CommunitySettings {
   currencyName: string;
   currencySymbol: string;
   dailyRewardAmount: number;
+  confessionChannelId: ChannelGuid | null;
+  starboardChannelId: ChannelGuid | null;
+  starboardThreshold: number;
   updatedAt: string;
 }
+
