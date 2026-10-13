@@ -1,0 +1,27 @@
+{
+  "name": "@nexus/bot",
+  "author": "",
+  "description": "nexus Bot",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@rootsdk/server-bot": "*",
+    "@types/sqlite3": "^3.1.11",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "@rootsdk/dev-tools": "*",
+    "typescript": "^5.8.2",
+    "vitest": "^5.0.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "clean": "node clean.js",
+    "bot": "rootsdk start devhost",
+    "package": "rootsdk build package"
+  }
+}

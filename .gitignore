@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment and sensitive secrets
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+dist/
+*.tsbuildinfo
+*.pkg
+
+# SQLite database files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# OS metadata
+.DS_Store
+Thumbs.db

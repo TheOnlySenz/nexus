@@ -1,0 +1,54 @@
+{
+  "id": "nexus-bot",
+  "version": "1.0.0",
+  "package": {
+    "server": {
+      "launch": "dist/main.js",
+      "deploy": [
+        "dist"
+      ],
+      "nodeModules": [
+        "node_modules"
+      ]
+    }
+  },
+  "permissions": {
+    "community": {
+      "manageRoles": true,
+      "createBan": true,
+      "manageBans": true,
+      "kick": true,
+      "manageCommunity": false
+    },
+    "channel": {
+      "createMessage": true,
+      "deleteMessageOther": true,
+      "managePinnedMessages": true,
+      "viewMessageHistory": true,
+      "createMessageMention": true,
+      "createMessageReaction": true
+    }
+  },
+  "settings": {
+    "groups": [
+      {
+        "key": "nexus_admin",
+        "title": "NEXUS Administration",
+        "items": [
+          {
+            "key": "moderators",
+            "title": "NEXUS Moderators & Admins",
+            "description": "Select roles and members authorized to execute moderation commands and configure NEXUS.",
+            "required": false,
+            "confirmation": "Save",
+            "roleOrMember": {
+              "selectBehavior": "roleMultiAndUserMulti",
+              "userIds": [],
+              "communityRoleIds": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
