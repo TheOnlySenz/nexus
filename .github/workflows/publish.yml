@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       authToken:
-        description: "RootApp Production Auth Token"
-        required: true
+        description: "RootApp Authentication Token (from Developer Portal)"
+        required: false
         type: string
       host:
-        description: "Target Host (e.g. dev.rootapp.com or live)"
+        description: "Optional custom host (leave empty for default Root production cloud)"
         required: false
-        default: "dev.rootapp.com"
+        default: ""
         type: string
 
 jobs:
@@ -39,12 +39,29 @@ jobs:
       - name: Package Bot
         run: npx rootsdk build package --output-file ./rootapp.pkg --project-folder .
 
+      - name: Upload Package as Downloadable Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rootapp-package
+          path: ./rootapp.pkg
+
       - name: Upload Package to RootApp
+        if: ${{ inputs.authToken != '' || env.SECRET_AUTH_TOKEN != '' }}
         env:
-          AUTH_TOKEN: ${{ inputs.authToken || secrets.ROOTAPP_AUTH_TOKEN }}
-          HOST: ${{ inputs.host || 'dev.rootapp.com' }}
+          AUTH_TOKEN: ${{ inputs.authToken }}
+          SECRET_AUTH_TOKEN: ${{ secrets.ROOTAPP_AUTH_TOKEN }}
+          HOST: ${{ inputs.host }}
         run: |
-          npx rootsdk upload package \
-            --file ./rootapp.pkg \
-            --authToken "$AUTH_TOKEN" \
-            --host "$HOST"
+          TOKEN="${AUTH_TOKEN:-$SECRET_AUTH_TOKEN}"
+          if [ -z "$TOKEN" ]; then
+            echo "No auth token provided; skipping cloud upload. You can download rootapp.pkg from artifacts."
+            exit 0
+          fi
+
+          if [ -n "$HOST" ]; then
+            echo "Uploading with custom host: $HOST"
+            npx rootsdk upload package --file ./rootapp.pkg --authToken "$TOKEN" --host "$HOST"
+          else
+            echo "Uploading to standard Root cloud..."
+            npx rootsdk upload package --file ./rootapp.pkg --authToken "$TOKEN"
+          fi
